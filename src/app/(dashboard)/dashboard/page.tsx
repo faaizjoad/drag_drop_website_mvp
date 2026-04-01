@@ -1,9 +1,9 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import { SiteCard } from "@/components/dashboard/site-card";
-import { PlusIcon } from "lucide-react";
+import { NewSiteButton } from "@/components/dashboard/new-site-button";
+import { GlobeIcon } from "lucide-react";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -11,37 +11,50 @@ export default async function DashboardPage() {
 
   const sites = await prisma.site.findMany({
     where: { userId: session.user.id },
-    orderBy: { createdAt: "desc" },
+    orderBy: { updatedAt: "desc" },
     include: { _count: { select: { pages: true } } },
   });
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">My Sites</h1>
-        <Link
-          href="/dashboard/sites/new"
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition"
-        >
-          <PlusIcon size={16} />
-          New Site
-        </Link>
-      </header>
+  const serialized = sites.map((s) => ({
+    ...s,
+    createdAt: s.createdAt.toISOString(),
+    updatedAt: s.updatedAt.toISOString(),
+  }));
 
-      <main className="px-6 py-8">
-        {sites.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
-            <p className="text-lg">No sites yet.</p>
-            <p className="text-sm mt-1">Create your first site to get started.</p>
+  return (
+    <div className="px-8 py-8 max-w-6xl mx-auto">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Sites</h1>
+          <p className="text-sm text-gray-500 mt-0.5">
+            {sites.length === 0
+              ? "Create your first site to get started"
+              : `${sites.length} site${sites.length !== 1 ? "s" : ""}`}
+          </p>
+        </div>
+        <NewSiteButton />
+      </div>
+
+      {/* Grid */}
+      {sites.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
+            <GlobeIcon size={24} className="text-gray-400" />
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {sites.map((site) => (
-              <SiteCard key={site.id} site={site} />
-            ))}
-          </div>
-        )}
-      </main>
+          <h3 className="text-base font-semibold text-gray-700">No sites yet</h3>
+          <p className="text-sm text-gray-400 mt-1 mb-6">
+            Click &ldquo;New Site&rdquo; to create your first website.
+          </p>
+          <NewSiteButton />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {serialized.map((site) => (
+            <SiteCard key={site.id} site={site} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

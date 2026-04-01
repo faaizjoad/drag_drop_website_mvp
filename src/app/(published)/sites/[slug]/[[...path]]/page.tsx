@@ -5,11 +5,11 @@ import { puckConfig } from "@/components/editor/puck-config";
 import type { Metadata } from "next";
 
 interface Props {
-  params: { slug: string; path: string[] };
+  params: { slug: string; path?: string[] };
 }
 
-async function getPage(slug: string, path: string[]) {
-  const pagePath = "/" + path.join("/");
+async function getPage(slug: string, path?: string[]) {
+  const pagePath = path && path.length > 0 ? "/" + path.join("/") : "/";
 
   return prisma.page.findFirst({
     where: {
