@@ -1,49 +1,57 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { getPresignedUploadUrl, getPublicUrl } from "@/lib/s3";
-import { z } from "zod";
+import { uploadFile } from "@/lib/s3";
 import { randomUUID } from "crypto";
 
-const uploadSchema = z.object({
-  filename: z.string().min(1),
-  contentType: z.string().min(1),
-  size: z.number().int().positive(),
-});
+const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+const ALLOWED_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "image/svg+xml",
+  "video/mp4",
+  "application/pdf",
+]);
 
 export async function POST(request: Request) {
   const session = await auth();
-  if (!session?.user) {
+  if (!session?.user)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
 
-  const body = await request.json();
-  const parsed = uploadSchema.safeParse(body);
+  const formData = await request.formData();
+  const file = formData.get("file") as File | null;
 
-  if (!parsed.success) {
+  if (!file)
+    return NextResponse.json({ error: "No file provided" }, { status: 400 });
+  if (file.size > MAX_SIZE)
     return NextResponse.json(
-      { error: "Invalid input", issues: parsed.error.issues },
+      { error: "File too large (max 5 MB)" },
       { status: 400 }
     );
-  }
+  if (!ALLOWED_TYPES.has(file.type))
+    return NextResponse.json(
+      { error: "File type not allowed" },
+      { status: 400 }
+    );
 
-  const { filename, contentType, size } = parsed.data;
-  const ext = filename.split(".").pop();
-  const key = `uploads/${session.user.id}/${randomUUID()}.${ext}`;
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const ext = file.name.split(".").pop() ?? "bin";
+  const key = `uploads/${session.user.id}/${Date.now()}-${randomUUID()}.${ext}`;
 
-  const uploadUrl = await getPresignedUploadUrl(key, contentType);
-  const publicUrl = getPublicUrl(key);
+  const url = await uploadFile(buffer, key, file.type);
 
-  await prisma.mediaAsset.create({
+  const asset = await prisma.mediaAsset.create({
     data: {
-      url: publicUrl,
+      url,
       key,
-      filename,
-      mimeType: contentType,
-      size,
+      filename: file.name,
+      mimeType: file.type,
+      size: file.size,
       userId: session.user.id,
     },
   });
 
-  return NextResponse.json({ uploadUrl, url: publicUrl, key });
+  return NextResponse.json({ url, id: asset.id });
 }
