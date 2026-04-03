@@ -1,0 +1,198 @@
+{
+  "content": [
+    {
+      "type": "Navbar",
+      "props": {
+        "id": "navbar-1",
+        "logo": "YourBlog",
+        "links": [
+          { "label": "Home", "href": "/" },
+          { "label": "Articles", "href": "/blog" },
+          { "label": "About", "href": "/about" }
+        ],
+        "ctaText": "Subscribe",
+        "ctaHref": "#subscribe",
+        "backgroundColor": "#ffffff",
+        "textColor": "#111827"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-1", "height": "64px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "post-title",
+        "text": "The Complete Guide to Building Modern Web Applications",
+        "level": "h1",
+        "align": "left",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-2", "height": "16px" }
+    },
+    {
+      "type": "Text",
+      "props": {
+        "id": "post-meta",
+        "content": "By Alex Rivera  ·  April 4, 2026  ·  8 min read",
+        "align": "left",
+        "color": "#9ca3af",
+        "fontSize": "0.875rem"
+      }
+    },
+    {
+      "type": "Divider",
+      "props": {
+        "id": "divider-1",
+        "color": "#e5e7eb",
+        "lineStyle": "solid",
+        "thickness": "1px",
+        "width": "100%"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-3", "height": "32px" }
+    },
+    {
+      "type": "Image",
+      "props": {
+        "id": "featured-image",
+        "src": "",
+        "alt": "Article featured image",
+        "width": "100%",
+        "aspectRatio": "16/9",
+        "objectFit": "cover",
+        "borderRadius": "12px"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-4", "height": "40px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "intro-heading",
+        "text": "Introduction",
+        "level": "h2",
+        "align": "left",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-5", "height": "16px" }
+    },
+    {
+      "type": "Text",
+      "props": {
+        "id": "intro-text",
+        "content": "Building modern web applications has never been more exciting — or more complex. In this guide, we'll walk through the key principles, tools, and patterns that separate good web apps from great ones.\n\nWhether you're just starting out or looking to level up your skills, this guide has something for everyone. We'll cover architecture decisions, performance optimization, accessibility, and much more.",
+        "align": "left",
+        "color": "#374151",
+        "fontSize": "1rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-6", "height": "32px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "section-1-heading",
+        "text": "Core principles",
+        "level": "h2",
+        "align": "left",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-7", "height": "16px" }
+    },
+    {
+      "type": "Text",
+      "props": {
+        "id": "section-1-text",
+        "content": "The best web applications share a set of core principles: they're fast, accessible, secure, and maintainable. Let's explore each of these in depth.\n\nPerformance isn't just a nice-to-have — it directly impacts user retention and conversion rates. Studies show that a 1-second delay in page load can reduce conversions by 7%. This means performance must be built in from the start, not bolted on at the end.",
+        "align": "left",
+        "color": "#374151",
+        "fontSize": "1rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-8", "height": "48px" }
+    },
+    {
+      "type": "Testimonial",
+      "props": {
+        "id": "pullquote-1",
+        "quote": "Performance is a feature. Every millisecond you save is a user you keep.",
+        "author": "Alex Rivera",
+        "role": "Author",
+        "avatar": "",
+        "backgroundColor": "#eff6ff",
+        "accentColor": "#2563eb"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-9", "height": "48px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "section-2-heading",
+        "text": "Conclusion",
+        "level": "h2",
+        "align": "left",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-10", "height": "16px" }
+    },
+    {
+      "type": "Text",
+      "props": {
+        "id": "conclusion-text",
+        "content": "Building great web applications is a journey, not a destination. The web platform is constantly evolving, and the best engineers evolve with it. Start with the fundamentals, ship often, and listen to your users.\n\nHave questions or feedback? Reach out on Twitter or drop a comment below.",
+        "align": "left",
+        "color": "#374151",
+        "fontSize": "1rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-11", "height": "80px" }
+    },
+    {
+      "type": "Footer",
+      "props": {
+        "id": "footer-1",
+        "logo": "YourBlog",
+        "tagline": "Thoughts on technology, design, and the web.",
+        "copyright": "© 2026 YourBlog. All rights reserved.",
+        "columns": [
+          { "title": "Topics", "links": [{ "label": "Engineering", "href": "#" }, { "label": "Design", "href": "#" }, { "label": "Product", "href": "#" }] }
+        ],
+        "backgroundColor": "#111827",
+        "textColor": "#9ca3af"
+      }
+    }
+  ],
+  "root": { "props": {} },
+  "zones": {}
+}

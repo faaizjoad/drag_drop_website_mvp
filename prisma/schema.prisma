@@ -87,3 +87,12 @@ model MediaAsset {
   userId    String
   createdAt DateTime @default(now())
 }
+
+model Template {
+  id        String   @id @default(cuid())
+  name      String
+  puckData  Json
+  userId    String
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

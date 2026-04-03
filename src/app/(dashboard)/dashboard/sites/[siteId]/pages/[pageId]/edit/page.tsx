@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { redirect, notFound } from "next/navigation";
 import { EditorClient } from "@/components/editor/editor-client";
 import type { Metadata } from "next";
+import { resolveGlobalStyles, buildCssVars, buildGoogleFontsHref } from "@/lib/site-styles";
 
 interface Props {
   params: { siteId: string; pageId: string };
@@ -26,20 +27,32 @@ export default async function EditPagePage({ params }: Props) {
       siteId: params.siteId,
       site: { userId: session.user.id },
     },
-    include: { site: { select: { slug: true } } },
+    include: { site: { select: { slug: true, globalStyles: true } } },
   });
 
   if (!page) notFound();
 
+  const globalStyles = resolveGlobalStyles(page.site.globalStyles);
+  const cssVars = buildCssVars(globalStyles);
+  const fontsHref = buildGoogleFontsHref(globalStyles);
+
   return (
-    <EditorClient
-      pageId={page.id}
-      siteId={params.siteId}
-      siteSlug={page.site.slug}
-      pagePath={page.path}
-      pageTitle={page.title}
-      isPublished={page.isPublished}
-      initialData={page.puckData as Record<string, unknown>}
-    />
+    <>
+      {/* Inject site theme into the editor so canvas preview matches the live site */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="stylesheet" href={fontsHref} />
+      <style dangerouslySetInnerHTML={{ __html: `:root { ${cssVars} }` }} />
+
+      <EditorClient
+        pageId={page.id}
+        siteId={params.siteId}
+        siteSlug={page.site.slug}
+        pagePath={page.path}
+        pageTitle={page.title}
+        isPublished={page.isPublished}
+        initialData={page.puckData as Record<string, unknown>}
+      />
+    </>
   );
 }

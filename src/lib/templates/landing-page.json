@@ -1,0 +1,111 @@
+{
+  "content": [
+    {
+      "type": "Navbar",
+      "props": {
+        "id": "navbar-1",
+        "logo": "YourBrand",
+        "links": [
+          { "label": "Features", "href": "#features" },
+          { "label": "Testimonials", "href": "#testimonials" },
+          { "label": "Pricing", "href": "#pricing" },
+          { "label": "Contact", "href": "#contact" }
+        ],
+        "ctaText": "Get started free",
+        "ctaHref": "#",
+        "backgroundColor": "#ffffff",
+        "textColor": "#111827"
+      }
+    },
+    {
+      "type": "Hero",
+      "props": {
+        "id": "hero-1",
+        "heading": "Build something\npeople love",
+        "subtext": "The fastest way to launch your product. No code required — just drag, drop, and publish in minutes.",
+        "ctaText": "Start for free",
+        "ctaHref": "#",
+        "ctaSecondaryText": "See how it works →",
+        "ctaSecondaryHref": "#",
+        "backgroundColor": "#eef2ff",
+        "textColor": "#111827",
+        "align": "center",
+        "paddingY": "xl"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-1", "height": "80px" }
+    },
+    {
+      "type": "FeatureGrid",
+      "props": {
+        "id": "features-1",
+        "features": [
+          { "icon": "⚡", "title": "Lightning fast", "description": "Pages load instantly with optimized static rendering and global CDN delivery." },
+          { "icon": "🎨", "title": "Fully customizable", "description": "Adjust colors, fonts, and layouts to perfectly match your brand identity." },
+          { "icon": "📱", "title": "Mobile-first design", "description": "Every template looks beautiful on phones, tablets, and desktops automatically." },
+          { "icon": "🔒", "title": "Secure by default", "description": "Enterprise-grade security built in from day one, no configuration needed." },
+          { "icon": "📊", "title": "Built-in analytics", "description": "Understand your visitors with clear, privacy-friendly analytics dashboards." },
+          { "icon": "🤝", "title": "Team collaboration", "description": "Invite teammates, leave comments, and ship together without conflict." }
+        ],
+        "columns": "3",
+        "iconSize": "2.5rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-2", "height": "96px" }
+    },
+    {
+      "type": "Testimonial",
+      "props": {
+        "id": "testimonial-1",
+        "quote": "This product completely transformed how we build and ship web pages. We went from weeks of development to hours. The ROI is incredible.",
+        "author": "Sarah Johnson",
+        "role": "Head of Marketing, Acme Corp",
+        "avatar": "",
+        "backgroundColor": "#f8fafc",
+        "accentColor": "#2563eb"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-3", "height": "96px" }
+    },
+    {
+      "type": "Hero",
+      "props": {
+        "id": "cta-section",
+        "heading": "Ready to get started?",
+        "subtext": "Join thousands of teams already building with us. Free to try, no credit card required.",
+        "ctaText": "Create your first page",
+        "ctaHref": "#",
+        "ctaSecondaryText": "",
+        "ctaSecondaryHref": "",
+        "backgroundColor": "#1e293b",
+        "textColor": "#f8fafc",
+        "align": "center",
+        "paddingY": "lg"
+      }
+    },
+    {
+      "type": "Footer",
+      "props": {
+        "id": "footer-1",
+        "logo": "YourBrand",
+        "tagline": "The easiest way to build and ship websites.",
+        "copyright": "© 2026 YourBrand. All rights reserved.",
+        "columns": [
+          { "title": "Product", "links": [{ "label": "Features", "href": "#" }, { "label": "Pricing", "href": "#" }, { "label": "Changelog", "href": "#" }] },
+          { "title": "Company", "links": [{ "label": "About", "href": "#" }, { "label": "Blog", "href": "#" }, { "label": "Careers", "href": "#" }] },
+          { "title": "Support", "links": [{ "label": "Docs", "href": "#" }, { "label": "Contact", "href": "#" }, { "label": "Status", "href": "#" }] }
+        ],
+        "backgroundColor": "#111827",
+        "textColor": "#9ca3af"
+      }
+    }
+  ],
+  "root": { "props": {} },
+  "zones": {}
+}

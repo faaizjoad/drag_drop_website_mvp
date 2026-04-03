@@ -4,25 +4,43 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { PlusIcon } from "lucide-react";
 import { Modal } from "@/components/ui/modal";
+import { TemplatePicker } from "@/components/dashboard/template-picker";
 import { createPage } from "@/lib/actions/pages";
 
 interface AddPageButtonProps {
   siteId: string;
 }
 
+type Step = "template" | "details";
+
 export function AddPageButton({ siteId }: AddPageButtonProps) {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [step, setStep] = useState<Step | null>(null);
   const [isPending, startTransition] = useTransition();
   const [title, setTitle] = useState("");
   const [path, setPath] = useState("/");
   const [error, setError] = useState<string | null>(null);
+  const [selectedPuckData, setSelectedPuckData] = useState<Record<string, unknown> | null>(null);
 
-  function handleClose() {
+  function handleOpen() {
     setTitle("");
     setPath("/");
     setError(null);
-    setOpen(false);
+    setSelectedPuckData(null);
+    setStep("template");
+  }
+
+  function handleClose() {
+    setStep(null);
+    setTitle("");
+    setPath("/");
+    setError(null);
+    setSelectedPuckData(null);
+  }
+
+  function handleTemplateSelect(puckData: Record<string, unknown>) {
+    setSelectedPuckData(puckData);
+    setStep("details");
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -30,7 +48,12 @@ export function AddPageButton({ siteId }: AddPageButtonProps) {
     if (!title.trim() || !path.trim()) return;
     setError(null);
     startTransition(async () => {
-      const result = await createPage(siteId, title.trim(), path.trim());
+      const result = await createPage(
+        siteId,
+        title.trim(),
+        path.trim(),
+        selectedPuckData ?? undefined
+      );
       if ("error" in result && result.error) {
         setError(result.error);
       } else {
@@ -43,14 +66,26 @@ export function AddPageButton({ siteId }: AddPageButtonProps) {
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
         className="flex items-center gap-1.5 bg-blue-600 text-white px-3.5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
       >
         <PlusIcon size={14} />
         Add Page
       </button>
 
-      <Modal open={open} onClose={handleClose} title="Add a new page">
+      {/* Step 1: Template picker */}
+      <TemplatePicker
+        open={step === "template"}
+        onClose={handleClose}
+        onSelect={handleTemplateSelect}
+      />
+
+      {/* Step 2: Page details */}
+      <Modal
+        open={step === "details"}
+        onClose={handleClose}
+        title="Page details"
+      >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -94,6 +129,13 @@ export function AddPageButton({ siteId }: AddPageButtonProps) {
           <div className="flex gap-2.5 pt-1">
             <button
               type="button"
+              onClick={() => setStep("template")}
+              className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              ← Back
+            </button>
+            <button
+              type="button"
               onClick={handleClose}
               className="flex-1 px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
             >
@@ -104,7 +146,7 @@ export function AddPageButton({ siteId }: AddPageButtonProps) {
               disabled={isPending || !title.trim()}
               className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
             >
-              {isPending ? "Creating…" : "Add page"}
+              {isPending ? "Creating…" : "Create page"}
             </button>
           </div>
         </form>

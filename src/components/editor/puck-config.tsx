@@ -29,6 +29,9 @@ function ImageUploadField({
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [browserOpen, setBrowserOpen] = useState(false);
+  // previewUrl is a short-lived signed URL used only for the thumbnail display.
+  // `value` (plain S3 URL) is still what gets stored in puckData.
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   async function handleFile(file: File) {
@@ -42,7 +45,8 @@ function ImageUploadField({
         const data = await res.json();
         throw new Error(data.error ?? "Upload failed");
       }
-      const { url } = await res.json();
+      const { url, viewUrl } = await res.json();
+      setPreviewUrl(viewUrl ?? url);
       onChange(url);
     } catch (err: any) {
       setUploadError(err.message ?? "Upload failed");
@@ -51,18 +55,30 @@ function ImageUploadField({
     }
   }
 
+  // When browsing, the selected asset's viewUrl comes via the onSelect callback.
+  // MediaBrowser still calls onSelect with the plain url (stored in puckData),
+  // so we intercept it here to also grab the viewUrl from the media grid.
+  function handleBrowserSelect(url: string, viewUrl?: string) {
+    setPreviewUrl(viewUrl ?? url);
+    onChange(url);
+  }
+
+  // Display: use previewUrl if we have one (just uploaded/selected),
+  // otherwise fall back to value (works for external/public URLs typed in manually).
+  const displaySrc = previewUrl ?? value;
+
   return (
     <>
       <MediaBrowser
         open={browserOpen}
         onClose={() => setBrowserOpen(false)}
-        onSelect={onChange}
+        onSelect={handleBrowserSelect}
       />
       <div className="space-y-2">
         <input
           type="text"
           value={value || ""}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => { setPreviewUrl(null); onChange(e.target.value); }}
           placeholder="https://example.com/image.jpg"
           className="w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
@@ -95,10 +111,10 @@ function ImageUploadField({
           />
         </div>
         {uploadError && <p className="text-xs text-red-500">{uploadError}</p>}
-        {value && (
+        {displaySrc && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={value}
+            src={displaySrc}
             alt=""
             className="w-full h-20 object-cover rounded border mt-1"
           />
@@ -349,7 +365,7 @@ export const puckConfig: Config = {
           h1: 800, h2: 700, h3: 700, h4: 600, h5: 600, h6: 500,
         };
         return (
-          <Tag style={{ textAlign: align, color, fontSize: fontSize === "auto" ? autoSizes[level] : fontSize, fontWeight: weights[level] ?? 700, lineHeight: 1.2, margin: 0 }}>
+          <Tag style={{ textAlign: align, color, fontSize: fontSize === "auto" ? autoSizes[level] : fontSize, fontWeight: weights[level] ?? 700, lineHeight: 1.2, margin: 0, fontFamily: "var(--font-heading)" }}>
             {text}
           </Tag>
         );
@@ -388,7 +404,7 @@ export const puckConfig: Config = {
         fontSize: "1rem",
       },
       render: ({ content, align, color, fontSize }: any) => (
-        <p style={{ textAlign: align, color, fontSize, lineHeight: 1.75, whiteSpace: "pre-wrap", margin: 0 }}>
+        <p style={{ textAlign: align, color, fontSize, lineHeight: 1.75, whiteSpace: "pre-wrap", margin: 0, fontFamily: "var(--font-body)" }}>
           {content}
         </p>
       ),
@@ -472,9 +488,9 @@ export const puckConfig: Config = {
       defaultProps: { text: "Get started", href: "#", variant: "primary", size: "md", align: "flex-start" },
       render: ({ text, href, variant, size, align }: any) => {
         const variantStyle: Record<string, React.CSSProperties> = {
-          primary:   { background: "#2563eb", color: "#fff",     border: "2px solid #2563eb" },
+          primary:   { background: "var(--color-primary, #2563eb)", color: "#fff", border: "2px solid var(--color-primary, #2563eb)" },
           secondary: { background: "#f3f4f6", color: "#374151",  border: "2px solid #e5e7eb" },
-          outline:   { background: "transparent", color: "#2563eb", border: "2px solid #2563eb" },
+          outline:   { background: "transparent", color: "var(--color-primary, #2563eb)", border: "2px solid var(--color-primary, #2563eb)" },
           ghost:     { background: "transparent", color: "#374151", border: "2px solid transparent" },
           danger:    { background: "#dc2626", color: "#fff",     border: "2px solid #dc2626" },
         };
@@ -595,15 +611,15 @@ export const puckConfig: Config = {
         return (
           <section style={{ backgroundColor, paddingTop: pv, paddingBottom: pv, paddingLeft: "24px", paddingRight: "24px" }}>
             <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: align }}>
-              <h1 style={{ fontSize: "3.5rem", fontWeight: 800, color: textColor, lineHeight: 1.1, marginBottom: "24px", whiteSpace: "pre-wrap", marginTop: 0 }}>
+              <h1 style={{ fontSize: "3.5rem", fontWeight: 800, color: textColor, lineHeight: 1.1, marginBottom: "24px", whiteSpace: "pre-wrap", marginTop: 0, fontFamily: "var(--font-heading)" }}>
                 {heading}
               </h1>
-              <p style={{ fontSize: "1.25rem", color: textColor, opacity: 0.7, marginBottom: "40px", lineHeight: 1.7, marginTop: 0 }}>
+              <p style={{ fontSize: "1.25rem", color: textColor, opacity: 0.7, marginBottom: "40px", lineHeight: 1.7, marginTop: 0, fontFamily: "var(--font-body)" }}>
                 {subtext}
               </p>
               <div style={{ display: "flex", gap: "12px", justifyContent: align === "center" ? "center" : "flex-start", flexWrap: "wrap" }}>
                 {ctaText && (
-                  <a href={ctaHref} style={{ display: "inline-block", backgroundColor: "#2563eb", color: "#fff", padding: "14px 32px", borderRadius: "10px", fontSize: "1rem", fontWeight: 700, textDecoration: "none" }}>
+                  <a href={ctaHref} style={{ display: "inline-block", backgroundColor: "var(--color-primary, #2563eb)", color: "#fff", padding: "14px 32px", borderRadius: "10px", fontSize: "1rem", fontWeight: 700, textDecoration: "none" }}>
                     {ctaText}
                   </a>
                 )}
@@ -793,7 +809,7 @@ export const puckConfig: Config = {
                 </a>
               ))}
               {ctaText && (
-                <a href={ctaHref} style={{ backgroundColor: "#2563eb", color: "#fff", padding: "8px 20px", borderRadius: "8px", fontSize: "0.9375rem", fontWeight: 600, textDecoration: "none" }}>
+                <a href={ctaHref} style={{ backgroundColor: "var(--color-primary, #2563eb)", color: "#fff", padding: "8px 20px", borderRadius: "8px", fontSize: "0.9375rem", fontWeight: 600, textDecoration: "none" }}>
                   {ctaText}
                 </a>
               )}

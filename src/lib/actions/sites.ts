@@ -59,6 +59,28 @@ export async function updateSite(siteId: string, name: string, slug: string) {
   }
 }
 
+export async function updateGlobalStyles(
+  siteId: string,
+  globalStyles: Record<string, unknown>
+) {
+  const session = await auth();
+  if (!session?.user) return { error: "Unauthorized" };
+
+  const site = await prisma.site.findFirst({
+    where: { id: siteId, userId: session.user.id },
+  });
+  if (!site) return { error: "Site not found." };
+
+  await prisma.site.update({
+    where: { id: siteId },
+    data: { globalStyles: globalStyles as Prisma.InputJsonValue },
+  });
+
+  revalidatePath(`/dashboard/sites/${siteId}`);
+  revalidatePath(`/sites/${site.slug}`);
+  return {};
+}
+
 export async function deleteSite(siteId: string) {
   const session = await auth();
   if (!session?.user) return { error: "Unauthorized" };

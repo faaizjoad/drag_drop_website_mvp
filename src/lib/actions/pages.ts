@@ -5,7 +5,12 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
 
-export async function createPage(siteId: string, title: string, path: string) {
+export async function createPage(
+  siteId: string,
+  title: string,
+  path: string,
+  initialPuckData?: Record<string, unknown>
+) {
   const session = await auth();
   if (!session?.user) return { error: "Unauthorized" };
 
@@ -22,7 +27,7 @@ export async function createPage(siteId: string, title: string, path: string) {
         title: title.trim(),
         path: normalizedPath.trim(),
         siteId,
-        puckData: { content: [], root: { props: {} } },
+        puckData: (initialPuckData ?? { content: [], root: { props: {} } }) as Prisma.InputJsonValue,
       },
     });
     revalidatePath(`/dashboard/sites/${siteId}`);

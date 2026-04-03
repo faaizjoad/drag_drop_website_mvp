@@ -1,0 +1,180 @@
+{
+  "content": [
+    {
+      "type": "Navbar",
+      "props": {
+        "id": "navbar-1",
+        "logo": "Jane Doe",
+        "links": [
+          { "label": "Work", "href": "#work" },
+          { "label": "About", "href": "#about" },
+          { "label": "Contact", "href": "#contact" }
+        ],
+        "ctaText": "Hire me",
+        "ctaHref": "#contact",
+        "backgroundColor": "#ffffff",
+        "textColor": "#111827"
+      }
+    },
+    {
+      "type": "Hero",
+      "props": {
+        "id": "hero-1",
+        "heading": "Designer &\nFront-end Developer",
+        "subtext": "I craft beautiful, fast, and accessible digital experiences. Available for freelance projects worldwide.",
+        "ctaText": "See my work",
+        "ctaHref": "#work",
+        "ctaSecondaryText": "Download CV",
+        "ctaSecondaryHref": "#",
+        "backgroundColor": "#0f172a",
+        "textColor": "#f8fafc",
+        "align": "left",
+        "paddingY": "xl"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-1", "height": "96px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "work-heading",
+        "text": "Selected work",
+        "level": "h2",
+        "align": "left",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-2", "height": "32px" }
+    },
+    {
+      "type": "Card",
+      "props": {
+        "id": "project-1",
+        "title": "E-commerce Redesign",
+        "description": "Complete redesign of a DTC fashion brand's online store. Increased conversion rate by 34% in the first month post-launch.",
+        "image": "",
+        "link": "#",
+        "linkText": "View case study",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-3", "height": "24px" }
+    },
+    {
+      "type": "Card",
+      "props": {
+        "id": "project-2",
+        "title": "SaaS Dashboard",
+        "description": "Designed and built a real-time analytics dashboard for a B2B SaaS startup. Reduced time-to-insight by 60%.",
+        "image": "",
+        "link": "#",
+        "linkText": "View case study",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-4", "height": "24px" }
+    },
+    {
+      "type": "Card",
+      "props": {
+        "id": "project-3",
+        "title": "Mobile App — iOS & Android",
+        "description": "Led product design for a fintech app serving 200k+ users. Shipped 3 major feature releases in 6 months.",
+        "image": "",
+        "link": "#",
+        "linkText": "View case study",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-5", "height": "96px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "about-heading",
+        "text": "About me",
+        "level": "h2",
+        "align": "left",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-6", "height": "24px" }
+    },
+    {
+      "type": "Text",
+      "props": {
+        "id": "about-text",
+        "content": "I'm Jane, a product designer and front-end developer based in San Francisco. I've been building for the web for over 8 years, working with startups, agencies, and Fortune 500 companies.\n\nI believe great products are born at the intersection of beautiful design and solid engineering. When I'm not designing, you'll find me hiking, reading, or experimenting with generative art.",
+        "align": "left",
+        "color": "#374151",
+        "fontSize": "1.125rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-7", "height": "48px" }
+    },
+    {
+      "type": "FeatureGrid",
+      "props": {
+        "id": "skills-grid",
+        "features": [
+          { "icon": "🎨", "title": "Product Design", "description": "Figma, wireframing, prototyping, user research, usability testing." },
+          { "icon": "💻", "title": "Front-end Dev", "description": "React, Next.js, TypeScript, Tailwind CSS, animations." },
+          { "icon": "📦", "title": "Design Systems", "description": "Component libraries, tokens, documentation, Storybook." }
+        ],
+        "columns": "3",
+        "iconSize": "2rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-8", "height": "96px" }
+    },
+    {
+      "type": "ContactForm",
+      "props": {
+        "id": "contact-form",
+        "heading": "Let's work together",
+        "description": "Tell me about your project and I'll get back to you within 24 hours.",
+        "submitLabel": "Send message",
+        "backgroundColor": "#f8fafc",
+        "showPhone": "false"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-9", "height": "80px" }
+    },
+    {
+      "type": "Footer",
+      "props": {
+        "id": "footer-1",
+        "logo": "Jane Doe",
+        "tagline": "Designer & Developer based in San Francisco.",
+        "copyright": "© 2026 Jane Doe. All rights reserved.",
+        "columns": [
+          { "title": "Connect", "links": [{ "label": "Twitter", "href": "#" }, { "label": "LinkedIn", "href": "#" }, { "label": "GitHub", "href": "#" }] }
+        ],
+        "backgroundColor": "#0f172a",
+        "textColor": "#94a3b8"
+      }
+    }
+  ],
+  "root": { "props": {} },
+  "zones": {}
+}

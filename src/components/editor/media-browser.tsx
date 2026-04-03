@@ -4,7 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 interface MediaAsset {
   id: string;
-  url: string;
+  url: string;      // plain public URL — stored in puckData
+  viewUrl: string;  // presigned GET URL — used for <img> display only
   filename: string;
   mimeType: string;
   size: number;
@@ -14,7 +15,8 @@ interface MediaAsset {
 interface MediaBrowserProps {
   open: boolean;
   onClose: () => void;
-  onSelect: (url: string) => void;
+  /** url = plain public URL stored in puckData; viewUrl = presigned URL for display */
+  onSelect: (url: string, viewUrl?: string) => void;
 }
 
 function formatBytes(bytes: number): string {
@@ -180,13 +182,13 @@ export function MediaBrowser({ open, onClose, onSelect }: MediaBrowserProps) {
                   key={asset.id}
                   type="button"
                   className="group relative aspect-square rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:border-blue-400 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  onClick={() => { onSelect(asset.url); onClose(); }}
+                  onClick={() => { onSelect(asset.url, asset.viewUrl); onClose(); }}
                   title={`${asset.filename} (${formatBytes(asset.size)})`}
                 >
                   {asset.mimeType.startsWith("image/") ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={asset.url}
+                      src={asset.viewUrl}
                       alt={asset.filename}
                       className="w-full h-full object-cover"
                     />

@@ -1,0 +1,135 @@
+{
+  "content": [
+    {
+      "type": "Navbar",
+      "props": {
+        "id": "navbar-1",
+        "logo": "YourBrand",
+        "links": [
+          { "label": "Home", "href": "/" },
+          { "label": "About", "href": "/about" },
+          { "label": "Contact", "href": "/contact" }
+        ],
+        "ctaText": "Get in touch",
+        "ctaHref": "/contact",
+        "backgroundColor": "#ffffff",
+        "textColor": "#111827"
+      }
+    },
+    {
+      "type": "Hero",
+      "props": {
+        "id": "hero-1",
+        "heading": "We build products\npeople love using",
+        "subtext": "Founded in 2020, we're a small team on a mission to make the web more accessible to everyone.",
+        "ctaText": "Meet the team",
+        "ctaHref": "#team",
+        "ctaSecondaryText": "",
+        "ctaSecondaryHref": "",
+        "backgroundColor": "#fafafa",
+        "textColor": "#111827",
+        "align": "center",
+        "paddingY": "lg"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-1", "height": "80px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "values-heading",
+        "text": "Our values",
+        "level": "h2",
+        "align": "center",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-2", "height": "32px" }
+    },
+    {
+      "type": "FeatureGrid",
+      "props": {
+        "id": "values-grid",
+        "features": [
+          { "icon": "💡", "title": "Clarity first", "description": "We simplify complexity and communicate with honesty, transparency, and respect." },
+          { "icon": "🌱", "title": "Always learning", "description": "We stay curious, embrace feedback, and constantly push ourselves to grow." },
+          { "icon": "❤️", "title": "Customer obsessed", "description": "Every decision starts with the question: how does this help our customers?" }
+        ],
+        "columns": "3",
+        "iconSize": "2.5rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-3", "height": "96px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "team-heading",
+        "text": "Meet the team",
+        "level": "h2",
+        "align": "center",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-4", "height": "16px" }
+    },
+    {
+      "type": "Text",
+      "props": {
+        "id": "team-intro",
+        "content": "We're a distributed team of designers, engineers, and product thinkers passionate about building tools that make people's lives easier.",
+        "align": "center",
+        "color": "#6b7280",
+        "fontSize": "1.125rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-5", "height": "48px" }
+    },
+    {
+      "type": "FeatureGrid",
+      "props": {
+        "id": "team-grid",
+        "features": [
+          { "icon": "👤", "title": "Alex Rivera", "description": "Co-founder & CEO. Previously at Stripe. Passionate about great product and clear communication." },
+          { "icon": "👤", "title": "Jamie Chen", "description": "Co-founder & CTO. Full-stack engineer with 10+ years of experience building scalable systems." },
+          { "icon": "👤", "title": "Morgan Kim", "description": "Head of Design. Ex-Figma. Believes good design is invisible — it just works." }
+        ],
+        "columns": "3",
+        "iconSize": "3rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-6", "height": "96px" }
+    },
+    {
+      "type": "Footer",
+      "props": {
+        "id": "footer-1",
+        "logo": "YourBrand",
+        "tagline": "Building the future, one page at a time.",
+        "copyright": "© 2026 YourBrand. All rights reserved.",
+        "columns": [
+          { "title": "Company", "links": [{ "label": "About", "href": "#" }, { "label": "Blog", "href": "#" }, { "label": "Careers", "href": "#" }] },
+          { "title": "Support", "links": [{ "label": "Contact", "href": "#" }, { "label": "Privacy", "href": "#" }, { "label": "Terms", "href": "#" }] }
+        ],
+        "backgroundColor": "#111827",
+        "textColor": "#9ca3af"
+      }
+    }
+  ],
+  "root": { "props": {} },
+  "zones": {}
+}

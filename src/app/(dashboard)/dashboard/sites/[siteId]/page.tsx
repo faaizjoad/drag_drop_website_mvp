@@ -5,7 +5,9 @@ import Link from "next/link";
 import { PageList } from "@/components/dashboard/page-list";
 import { AddPageButton } from "@/components/dashboard/add-page-button";
 import { EditSiteForm } from "@/components/dashboard/edit-site-form";
+import { GlobalStylesForm } from "@/components/dashboard/global-styles-form";
 import { ArrowLeftIcon, ExternalLinkIcon } from "lucide-react";
+import { resolveGlobalStyles } from "@/lib/site-styles";
 
 export default async function SitePage({
   params,
@@ -32,6 +34,8 @@ export default async function SitePage({
     isPublished: p.isPublished,
     updatedAt: p.updatedAt.toISOString(),
   }));
+
+  const globalStyles = resolveGlobalStyles(site.globalStyles);
 
   return (
     <div className="px-8 py-8 max-w-4xl mx-auto space-y-8">
@@ -71,7 +75,7 @@ export default async function SitePage({
         </div>
       </div>
 
-      {/* Settings card */}
+      {/* Site settings */}
       <section>
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <h2 className="text-sm font-semibold text-gray-900 mb-5">Site settings</h2>
@@ -79,7 +83,20 @@ export default async function SitePage({
         </div>
       </section>
 
-      {/* Pages section */}
+      {/* Global styles / theme */}
+      <section>
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="mb-5">
+            <h2 className="text-sm font-semibold text-gray-900">Theme</h2>
+            <p className="text-xs text-gray-400 mt-1">
+              Global colors and fonts applied to your published site.
+            </p>
+          </div>
+          <GlobalStylesForm siteId={site.id} initialStyles={globalStyles} />
+        </div>
+      </section>
+
+      {/* Pages */}
       <section>
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -90,7 +107,6 @@ export default async function SitePage({
           </div>
           <AddPageButton siteId={site.id} />
         </div>
-
         <PageList pages={pages} siteId={site.id} />
       </section>
     </div>

@@ -4,6 +4,7 @@ import { Render } from "@puckeditor/core/rsc";
 import { puckConfigRsc } from "@/components/editor/puck-config-rsc";
 import type { Metadata } from "next";
 import { PoweredByBadge } from "@/components/published/powered-by-badge";
+import { resolveGlobalStyles, buildCssVars, buildGoogleFontsHref } from "@/lib/site-styles";
 
 /* ── ISR: revalidate every 60 seconds ─────────────────────────── */
 export const revalidate = 60;
@@ -17,8 +18,6 @@ interface Props {
 /* ── Data helpers ─────────────────────────────────────────────── */
 
 async function getSite(slug: string) {
-  // `slug` may actually be a custom domain when rewritten by middleware.
-  // Try customDomain first, then fall back to slug.
   return (
     (await prisma.site.findUnique({
       where: { customDomain: slug },
@@ -41,13 +40,11 @@ async function getPage(siteId: string, path?: string[]) {
 /* ── generateStaticParams ─────────────────────────────────────── */
 
 export async function generateStaticParams() {
-  // Pre-render the homepage of every site that has at least one published page
   const sites = await prisma.site.findMany({
     where: { pages: { some: { isPublished: true } } },
     select: { slug: true },
-    take: 100, // cap at 100 for build time
+    take: 100,
   });
-
   return sites.map(({ slug }) => ({ slug, path: [] }));
 }
 
@@ -88,8 +85,20 @@ export default async function PublishedPage({ params }: Props) {
   const page = await getPage(site.id, params.path);
   if (!page) notFound();
 
+  const globalStyles = resolveGlobalStyles(site.globalStyles);
+  const cssVars = buildCssVars(globalStyles);
+  const fontsHref = buildGoogleFontsHref(globalStyles);
+
   return (
     <>
+      {/* Google Fonts */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="stylesheet" href={fontsHref} />
+
+      {/* CSS custom properties for this site's theme */}
+      <style dangerouslySetInnerHTML={{ __html: `:root { ${cssVars} } body { font-family: var(--font-body); font-size: var(--font-size-base); background-color: var(--color-background); color: var(--color-text); }` }} />
+
       <Render
         config={puckConfigRsc}
         data={page.puckData as Parameters<typeof Render>[0]["data"]}

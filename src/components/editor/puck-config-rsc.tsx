@@ -98,7 +98,7 @@ export const puckConfigRsc: Config = {
           h1: 800, h2: 700, h3: 700, h4: 600, h5: 600, h6: 500,
         };
         return (
-          <Tag style={{ textAlign: align, color, fontSize: fontSize === "auto" ? autoSizes[level] : fontSize, fontWeight: weights[level] ?? 700, lineHeight: 1.2, margin: 0 }}>
+          <Tag style={{ textAlign: align, color, fontSize: fontSize === "auto" ? autoSizes[level] : fontSize, fontWeight: weights[level] ?? 700, lineHeight: 1.2, margin: 0, fontFamily: "var(--font-heading)" }}>
             {text}
           </Tag>
         );
@@ -107,7 +107,7 @@ export const puckConfigRsc: Config = {
 
     Text: {
       render: ({ content, align, color, fontSize }: any) => (
-        <p style={{ textAlign: align, color, fontSize, lineHeight: 1.75, whiteSpace: "pre-wrap", margin: 0 }}>
+        <p style={{ textAlign: align, color, fontSize, lineHeight: 1.75, whiteSpace: "pre-wrap", margin: 0, fontFamily: "var(--font-body)" }}>
           {content}
         </p>
       ),
@@ -128,9 +128,9 @@ export const puckConfigRsc: Config = {
     Button: {
       render: ({ text, href, variant, size, align }: any) => {
         const variantStyle: Record<string, React.CSSProperties> = {
-          primary:   { background: "#2563eb", color: "#fff",     border: "2px solid #2563eb" },
+          primary:   { background: "var(--color-primary, #2563eb)", color: "#fff", border: "2px solid var(--color-primary, #2563eb)" },
           secondary: { background: "#f3f4f6", color: "#374151",  border: "2px solid #e5e7eb" },
-          outline:   { background: "transparent", color: "#2563eb", border: "2px solid #2563eb" },
+          outline:   { background: "transparent", color: "var(--color-primary, #2563eb)", border: "2px solid var(--color-primary, #2563eb)" },
           ghost:     { background: "transparent", color: "#374151", border: "2px solid transparent" },
           danger:    { background: "#dc2626", color: "#fff",     border: "2px solid #dc2626" },
         };
@@ -169,15 +169,15 @@ export const puckConfigRsc: Config = {
         return (
           <section style={{ backgroundColor, paddingTop: pv, paddingBottom: pv, paddingLeft: "24px", paddingRight: "24px" }}>
             <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: align }}>
-              <h1 style={{ fontSize: "3.5rem", fontWeight: 800, color: textColor, lineHeight: 1.1, marginBottom: "24px", whiteSpace: "pre-wrap", marginTop: 0 }}>
+              <h1 style={{ fontSize: "3.5rem", fontWeight: 800, color: textColor, lineHeight: 1.1, marginBottom: "24px", whiteSpace: "pre-wrap", marginTop: 0, fontFamily: "var(--font-heading)" }}>
                 {heading}
               </h1>
-              <p style={{ fontSize: "1.25rem", color: textColor, opacity: 0.7, marginBottom: "40px", lineHeight: 1.7, marginTop: 0 }}>
+              <p style={{ fontSize: "1.25rem", color: textColor, opacity: 0.7, marginBottom: "40px", lineHeight: 1.7, marginTop: 0, fontFamily: "var(--font-body)" }}>
                 {subtext}
               </p>
               <div style={{ display: "flex", gap: "12px", justifyContent: align === "center" ? "center" : "flex-start", flexWrap: "wrap" }}>
                 {ctaText && (
-                  <a href={ctaHref} style={{ display: "inline-block", backgroundColor: "#2563eb", color: "#fff", padding: "14px 32px", borderRadius: "10px", fontSize: "1rem", fontWeight: 700, textDecoration: "none" }}>
+                  <a href={ctaHref} style={{ display: "inline-block", backgroundColor: "var(--color-primary, #2563eb)", color: "#fff", padding: "14px 32px", borderRadius: "10px", fontSize: "1rem", fontWeight: 700, textDecoration: "none" }}>
                     {ctaText}
                   </a>
                 )}
@@ -263,7 +263,7 @@ export const puckConfigRsc: Config = {
                 </a>
               ))}
               {ctaText && (
-                <a href={ctaHref} style={{ backgroundColor: "#2563eb", color: "#fff", padding: "8px 20px", borderRadius: "8px", fontSize: "0.9375rem", fontWeight: 600, textDecoration: "none" }}>
+                <a href={ctaHref} style={{ backgroundColor: "var(--color-primary, #2563eb)", color: "#fff", padding: "8px 20px", borderRadius: "8px", fontSize: "0.9375rem", fontWeight: 600, textDecoration: "none" }}>
                   {ctaText}
                 </a>
               )}

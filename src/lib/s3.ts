@@ -2,7 +2,9 @@ import {
   S3Client,
   PutObjectCommand,
   DeleteObjectCommand,
+  GetObjectCommand,
 } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 // Supports both AWS S3 and Cloudflare R2.
 // New-style vars: S3_ENDPOINT, S3_REGION, S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET
@@ -51,4 +53,19 @@ export async function uploadFile(
 /** Delete a file from S3/R2 by key. */
 export async function deleteFile(key: string): Promise<void> {
   await s3.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));
+}
+
+/**
+ * Generate a presigned GET URL valid for `expiresIn` seconds (default 1 hour).
+ * Use this when the bucket is not publicly accessible — e.g. for media browser thumbnails.
+ */
+export async function getSignedViewUrl(
+  key: string,
+  expiresIn = 3600
+): Promise<string> {
+  return getSignedUrl(
+    s3,
+    new GetObjectCommand({ Bucket: bucket, Key: key }),
+    { expiresIn }
+  );
 }

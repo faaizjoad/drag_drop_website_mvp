@@ -1,0 +1,102 @@
+{
+  "content": [
+    {
+      "type": "Navbar",
+      "props": {
+        "id": "navbar-1",
+        "logo": "YourBrand",
+        "links": [
+          { "label": "Home", "href": "/" },
+          { "label": "About", "href": "/about" },
+          { "label": "Contact", "href": "/contact" }
+        ],
+        "ctaText": "",
+        "ctaHref": "",
+        "backgroundColor": "#ffffff",
+        "textColor": "#111827"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-1", "height": "64px" }
+    },
+    {
+      "type": "Heading",
+      "props": {
+        "id": "page-heading",
+        "text": "Get in touch",
+        "level": "h1",
+        "align": "center",
+        "color": "#111827",
+        "fontSize": "auto"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-2", "height": "12px" }
+    },
+    {
+      "type": "Text",
+      "props": {
+        "id": "page-subtext",
+        "content": "Have a question, idea, or just want to say hi? We'd love to hear from you. Fill out the form and we'll get back to you within 24 hours.",
+        "align": "center",
+        "color": "#6b7280",
+        "fontSize": "1.125rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-3", "height": "48px" }
+    },
+    {
+      "type": "ContactForm",
+      "props": {
+        "id": "contact-form-1",
+        "heading": "Send us a message",
+        "description": "We typically respond within one business day.",
+        "submitLabel": "Send message",
+        "backgroundColor": "#f9fafb",
+        "showPhone": "true"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-4", "height": "80px" }
+    },
+    {
+      "type": "FeatureGrid",
+      "props": {
+        "id": "contact-details",
+        "features": [
+          { "icon": "📧", "title": "Email us", "description": "hello@yourbrand.com\nWe reply within 24 hours." },
+          { "icon": "📞", "title": "Call us", "description": "+1 (555) 000-0000\nMon–Fri, 9am–6pm EST" },
+          { "icon": "📍", "title": "Visit us", "description": "123 Main Street\nSan Francisco, CA 94105" }
+        ],
+        "columns": "3",
+        "iconSize": "2rem"
+      }
+    },
+    {
+      "type": "Spacer",
+      "props": { "id": "spacer-5", "height": "80px" }
+    },
+    {
+      "type": "Footer",
+      "props": {
+        "id": "footer-1",
+        "logo": "YourBrand",
+        "tagline": "Always happy to hear from you.",
+        "copyright": "© 2026 YourBrand. All rights reserved.",
+        "columns": [
+          { "title": "Company", "links": [{ "label": "About", "href": "#" }, { "label": "Blog", "href": "#" }] },
+          { "title": "Legal", "links": [{ "label": "Privacy", "href": "#" }, { "label": "Terms", "href": "#" }] }
+        ],
+        "backgroundColor": "#111827",
+        "textColor": "#9ca3af"
+      }
+    }
+  ],
+  "root": { "props": {} },
+  "zones": {}
+}

@@ -4,7 +4,7 @@ import { Puck, type Data } from "@puckeditor/core";
 import "@puckeditor/core/dist/index.css";
 import { puckConfig } from "./puck-config";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeftIcon, ExternalLinkIcon, GlobeIcon, Loader2Icon, CheckIcon } from "lucide-react";
+import { ArrowLeftIcon, ExternalLinkIcon, GlobeIcon, Loader2Icon, CheckIcon, BookmarkIcon } from "lucide-react";
 import Link from "next/link";
 
 interface EditorClientProps {
@@ -31,6 +31,8 @@ export function EditorClient({
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [isPublished, setIsPublished] = useState(initialIsPublished);
   const [publishing, setPublishing] = useState(false);
+  const [savingTemplate, setSavingTemplate] = useState(false);
+  const [templateSaved, setTemplateSaved] = useState(false);
   const latestDataRef = useRef<Record<string, unknown>>(initialData);
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -81,6 +83,24 @@ export function EditorClient({
     setPublishing(false);
   }
 
+  /* ── save as template ── */
+  async function handleSaveAsTemplate() {
+    const name = window.prompt("Template name:", pageTitle);
+    if (!name?.trim()) return;
+    setSavingTemplate(true);
+    try {
+      await fetch("/api/templates", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), puckData: latestDataRef.current }),
+      });
+      setTemplateSaved(true);
+      setTimeout(() => setTemplateSaved(false), 2500);
+    } finally {
+      setSavingTemplate(false);
+    }
+  }
+
   /* ── unpublish handler ── */
   async function handleUnpublish() {
     setPublishing(true);
@@ -119,6 +139,7 @@ export function EditorClient({
           latestDataRef.current = data as unknown as Record<string, unknown>;
           scheduleAutoSave();
         }}
+        iframe={{ enabled: false }}
         headerTitle={pageTitle}
         headerPath={pagePath}
         renderHeaderActions={() => (
@@ -144,6 +165,17 @@ export function EditorClient({
               <ExternalLinkIcon size={12} />
               Preview
             </a>
+
+            {/* Save as template */}
+            <button
+              onClick={handleSaveAsTemplate}
+              disabled={savingTemplate}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 transition-colors"
+              title="Save as template"
+            >
+              {templateSaved ? <CheckIcon size={12} /> : <BookmarkIcon size={12} />}
+              {templateSaved ? "Saved!" : savingTemplate ? "Saving…" : "Save as template"}
+            </button>
 
             {/* Save draft */}
             <button
