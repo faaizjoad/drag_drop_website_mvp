@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Sidebar } from "@/components/dashboard/sidebar";
+import { DashboardShell } from "@/components/dashboard/dashboard-shell";
+import { ToastContainer } from "@/components/ui/toast";
 
 export default async function DashboardLayout({
   children,
@@ -11,9 +12,9 @@ export default async function DashboardLayout({
   if (!session?.user) redirect("/login");
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
-      <Sidebar user={session.user} />
-      <main className="flex-1 overflow-y-auto">{children}</main>
-    </div>
+    <>
+      <DashboardShell user={session.user}>{children}</DashboardShell>
+      <ToastContainer />
+    </>
   );
 }

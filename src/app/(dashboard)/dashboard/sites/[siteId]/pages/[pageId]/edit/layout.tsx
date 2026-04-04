@@ -13,7 +13,7 @@ export default function EditorLayout({
       style={{
         position: "fixed",
         inset: 0,
-        zIndex: 40,
+        zIndex: 60,
         background: "#fff",
         overflow: "hidden",
       }}

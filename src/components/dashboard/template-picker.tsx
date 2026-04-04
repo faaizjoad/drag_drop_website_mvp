@@ -49,7 +49,6 @@ export function TemplatePicker({ open, onClose, onSelect }: TemplatePickerProps)
     if (!res.ok) return;
     const t = await res.json();
     onSelect(t.puckData);
-    onClose();
   }
 
   async function deleteUserTemplate(e: React.MouseEvent, id: string) {

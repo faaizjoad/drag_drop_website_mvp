@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { GlobeIcon, SettingsIcon, LogOutIcon, LayoutDashboardIcon } from "lucide-react";
+import { GlobeIcon, SettingsIcon, LogOutIcon, LayoutDashboardIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -12,6 +12,7 @@ interface SidebarProps {
     email?: string | null;
     image?: string | null;
   };
+  onClose?: () => void;
 }
 
 const NAV = [
@@ -19,18 +20,29 @@ const NAV = [
   { href: "/dashboard/settings", label: "Settings", icon: SettingsIcon, exact: false },
 ];
 
-export function Sidebar({ user }: SidebarProps) {
+export function Sidebar({ user, onClose }: SidebarProps) {
   const pathname = usePathname();
   const initial = (user.name?.[0] ?? user.email?.[0] ?? "U").toUpperCase();
 
   return (
     <aside className="w-60 shrink-0 flex flex-col bg-gray-900 h-full">
       {/* Logo */}
-      <div className="h-16 flex items-center gap-2.5 px-5 border-b border-white/10">
-        <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
-          <LayoutDashboardIcon size={14} className="text-white" />
+      <div className="h-16 flex items-center justify-between px-5 border-b border-white/10">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+            <LayoutDashboardIcon size={14} className="text-white" />
+          </div>
+          <span className="text-white font-semibold tracking-tight">WebBuilder</span>
         </div>
-        <span className="text-white font-semibold tracking-tight">WebBuilder</span>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="md:hidden p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Close menu"
+          >
+            <XIcon size={16} />
+          </button>
+        )}
       </div>
 
       {/* Nav */}

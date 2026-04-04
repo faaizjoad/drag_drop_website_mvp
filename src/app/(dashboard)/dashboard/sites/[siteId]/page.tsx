@@ -38,7 +38,7 @@ export default async function SitePage({
   const globalStyles = resolveGlobalStyles(site.globalStyles);
 
   return (
-    <div className="px-8 py-8 max-w-4xl mx-auto space-y-8">
+    <div className="px-4 sm:px-8 py-8 max-w-4xl mx-auto space-y-8">
       {/* Breadcrumb + header */}
       <div>
         <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">

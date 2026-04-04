@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   }));
 
   return (
-    <div className="px-8 py-8 max-w-6xl mx-auto">
+    <div className="px-4 sm:px-8 py-8 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -38,13 +38,13 @@ export default async function DashboardPage() {
 
       {/* Grid */}
       {sites.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
-            <GlobeIcon size={24} className="text-gray-400" />
+        <div className="flex flex-col items-center justify-center py-32 text-center">
+          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center mb-5 shadow-sm">
+            <GlobeIcon size={32} className="text-blue-400" />
           </div>
-          <h3 className="text-base font-semibold text-gray-700">No sites yet</h3>
-          <p className="text-sm text-gray-400 mt-1 mb-6">
-            Click &ldquo;New Site&rdquo; to create your first website.
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">Create your first site</h3>
+          <p className="text-sm text-gray-400 max-w-xs mb-8 leading-relaxed">
+            Build and publish a beautiful website in minutes — no code required.
           </p>
           <NewSiteButton />
         </div>

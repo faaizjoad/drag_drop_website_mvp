@@ -27,7 +27,7 @@ export default async function EditPagePage({ params }: Props) {
       siteId: params.siteId,
       site: { userId: session.user.id },
     },
-    include: { site: { select: { slug: true, globalStyles: true } } },
+    include: { site: { select: { globalStyles: true } } },
   });
 
   if (!page) notFound();
@@ -47,7 +47,6 @@ export default async function EditPagePage({ params }: Props) {
       <EditorClient
         pageId={page.id}
         siteId={params.siteId}
-        siteSlug={page.site.slug}
         pagePath={page.path}
         pageTitle={page.title}
         isPublished={page.isPublished}
