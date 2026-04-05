@@ -6,6 +6,7 @@ import { PageList } from "@/components/dashboard/page-list";
 import { AddPageButton } from "@/components/dashboard/add-page-button";
 import { EditSiteForm } from "@/components/dashboard/edit-site-form";
 import { GlobalStylesForm } from "@/components/dashboard/global-styles-form";
+import { CustomDomainForm } from "@/components/dashboard/custom-domain-form";
 import { ArrowLeftIcon, ExternalLinkIcon } from "lucide-react";
 import { resolveGlobalStyles } from "@/lib/site-styles";
 
@@ -80,6 +81,19 @@ export default async function SitePage({
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <h2 className="text-sm font-semibold text-gray-900 mb-5">Site settings</h2>
           <EditSiteForm site={{ id: site.id, name: site.name, slug: site.slug }} />
+        </div>
+      </section>
+
+      {/* Custom domain */}
+      <section>
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="mb-5">
+            <h2 className="text-sm font-semibold text-gray-900">Custom domain</h2>
+            <p className="text-xs text-gray-400 mt-1">
+              Connect your own domain so visitors see <strong>yoursite.com</strong> instead of the long URL.
+            </p>
+          </div>
+          <CustomDomainForm siteId={site.id} initialDomain={site.customDomain} />
         </div>
       </section>
 
