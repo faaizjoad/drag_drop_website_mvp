@@ -37,6 +37,10 @@ export default async function SitePage({
   }));
 
   const globalStyles = resolveGlobalStyles(site.globalStyles);
+  const firstPublishedPage = pages.find((p) => p.isPublished && p.path === "/") ?? pages.find((p) => p.isPublished);
+  const liveUrl = firstPublishedPage
+    ? `/sites/${site.slug}${firstPublishedPage.path === "/" ? "" : firstPublishedPage.path}`
+    : null;
 
   return (
     <div className="px-4 sm:px-8 py-8 max-w-4xl mx-auto space-y-8">
@@ -64,15 +68,25 @@ export default async function SitePage({
             </div>
           </div>
 
-          <a
-            href={`/sites/${site.slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition-colors shrink-0"
-          >
-            <ExternalLinkIcon size={13} />
-            View live
-          </a>
+          {liveUrl ? (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition-colors shrink-0"
+            >
+              <ExternalLinkIcon size={13} />
+              View live
+            </a>
+          ) : (
+            <span
+              title="Publish a page first to view the live site"
+              className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-gray-300 bg-gray-50 border border-gray-200 rounded-lg cursor-not-allowed shrink-0"
+            >
+              <ExternalLinkIcon size={13} />
+              View live
+            </span>
+          )}
         </div>
       </div>
 
